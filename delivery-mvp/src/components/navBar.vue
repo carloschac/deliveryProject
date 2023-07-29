@@ -1,59 +1,23 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+  <header class="header bg-body-tertiary">
+    <div class="container">
+      <div class="row">
+        <nav class="col-12 navbar">
+          <a href="/">
+            <img src="../assets/img/3.png" alt="logo" height="60px" />
+          </a>
+          <ul class="navbar-nav d-flex flex-row justify-content-between gap-1">
+            <li>
+              <a href="#"><button class="btn btn-primary">Login</button></a>
+            </li>
+            <li>
+              <a href="#"><button class="btn btn-primary">Cadastro</button></a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-  </nav>
+  </header>
 </template>
 
 <script>
@@ -63,5 +27,57 @@ export default {
 </script>
 
 <style>
-/* Estilos específicos para o componente Header, se necessário */
+* {
+  font-family: 'Lato', sans-serif;
+  --titulo-secao: #dc7860;
+  --texto-secao: #506959;
+}
+
+.header {
+  background: #506959 !important;
+}
+
+footer {
+  background: #506959 !important;
+  color: #ffffff;
+}
+
+footer nav a {
+  color: #ffffff !important;
+}
+
+footer nav a:hover {
+  color: #dc7860;
+}
+
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+header .nav-link {
+  text-decoration: none;
+  color: black;
+}
+
+header button {
+  background-color: #506959 !important;
+  color: #ffffff;
+
+  text-transform: uppercase;
+  border: none !important;
+}
+
+.header--active {
+  transition: 0.3s ease-in-out;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 50;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.25);
+  z-index: 99999;
+}
+
+/* ##################### FIM DOS ESTILOS PADRÕES */
 </style>
