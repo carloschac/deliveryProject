@@ -1,11 +1,13 @@
 <template>
   <div>
     <Header :title="pageTitle" />
-    <!-- Conteúdo da página -->
+    <!-- O formulário e outros componentes da sua aplicação aqui -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import Header from '@/components/layout/Comp_Header.vue';
 
 export default {
@@ -15,15 +17,14 @@ export default {
   data() {
     return {
       pageTitle: 'Página Inicial',
+      descricao: '',
+      valor: '',
+      parcelado: false,
+      parcelas: null,
+      dataLancamento: '',
+      valorInicial: '',
     };
   },
-
-
-import axios from 'axios';
-
-export default {
-  // ... (código anterior)
-
   methods: {
     adicionarGasto() {
       // Dados do gasto a serem enviados para o back-end
@@ -37,7 +38,8 @@ export default {
       };
 
       // Enviar os dados para o back-end usando o método POST do Axios
-      axios.post('http://localhost:3000/gastos', gasto)
+      axios
+        .post('http://localhost:3000/gastos', gasto)
         .then((response) => {
           console.log(response.data); // Resposta do servidor
           // Limpar os campos após o cadastro bem-sucedido (opcional)

@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors()); // Use o middleware cors
 
 app.use(bodyParser.json());
 
@@ -29,11 +32,11 @@ app.get('/gastos', (req, res) => {
 
 // Rota para adicionar um novo gasto (Create/POST)
 app.post('/gastos', (req, res) => {
-  const { descricao, valor, parcelado, parcelas, data_lancamento } = req.body;
+  const { descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id } = req.body;
 
-  const sql = 'INSERT INTO gastos (descricao, valor, parcelado, parcelas, data_lancamento) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO gastos (descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento], (err, result) => {
+  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Erro ao adicionar o gasto.' });
@@ -46,11 +49,11 @@ app.post('/gastos', (req, res) => {
 // Rota para editar um gasto existente (Update/PUT)
 app.put('/gastos/:id', (req, res) => {
   const { id } = req.params;
-  const { descricao, valor, parcelado, parcelas, data_lancamento } = req.body;
+  const { descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id } = req.body;
 
-  const sql = 'UPDATE gastos SET descricao=?, valor=?, parcelado=?, parcelas=?, data_lancamento=? WHERE id=?';
+  const sql = 'UPDATE gastos SET descricao=?, valor=?, parcelado=?, parcelas=?, data_lancamento=?, valor_inicial=?, mes_id=? WHERE id=?';
 
-  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento, id], (err, result) => {
+  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id, id], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Erro ao atualizar o gasto.' });
@@ -83,16 +86,69 @@ app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
 
-app.get('/testdb', (req, res) => {
-    const sql = 'SELECT 1 as result';
-  
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Erro ao testar a conexão com o banco de dados.' });
-      }
-  
-      res.json({ message: 'Conexão com o banco de dados bem-sucedida!', result: results[0].result });
-    });
+// Rota para adicionar um novo mês (Create/POST)
+app.post('/meses', (req, res) => {
+  const { mes, valor_inicial } = req.body;
+
+  const sql = 'INSERT INTO mes (mes, valor_inicial) VALUES (?, ?)';
+
+  connection.query(sql, [mes, valor_inicial], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Erro ao adicionar o mês.' });
+    }
+
+    res.json({ id: result.insertId, mensagem: 'Mês adicionado com sucesso!' });
   });
-  
+});
+
+// Rota para obter a lista de meses (Read/GET)
+app.get('/meses', (req, res) => {
+
+  const sql = 'SELECT * FROM mes';
+
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error('Erro na query:', err); // Adicione esta linha
+      return res.status(500).json({ error: 'Erro ao obter a lista de meses.' });
+    }
+
+
+    res.json(results);
+    console.log(results);
+  });
+});
+
+
+// Rota para excluir um mês (Delete/DELETE)
+app.delete('/meses/:id', (req, res) => {
+  const { id } = req.params;
+
+  console.log(id);
+
+  const sql = 'DELETE FROM mes WHERE id = ?';
+
+  connection.query(sql, [id], (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Erro ao excluir o mês.' });
+    }
+
+    res.json({ mensagem: 'Mês excluído com sucesso!' });
+  });
+});
+
+
+app.get('/testdb', (req, res) => {
+  const sql = 'SELECT 1 as result';
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Erro ao testar a conexão com o banco de dados.' });
+    }
+
+    res.json({ message: 'Conexão com o banco de dados bem-sucedida!', result: results[0].result });
+  });
+});
