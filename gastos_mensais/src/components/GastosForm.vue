@@ -1,19 +1,32 @@
 <template>
-  <div>
-    <h1>Cadastro de Gastos Mensais</h1>
+  <div class="container">
+    <h1 class="text-center">Cadastro de Gastos Mensais</h1>
 
     <form @submit.prevent="adicionarGasto">
-      <div>
-        <label>Descrição:</label>
-        <input type="text" v-model="descricao" required />
-      </div>
-      <div>
-        <label>Valor:</label>
-        <input type="number" v-model="valor" required />
-      </div>
-      <div>
-        <label>Parcelado:</label>
-        <input type="checkbox" v-model="parcelado" />
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Descrição:</label>
+          <div>
+            <input
+              type="text"
+              class="form-input"
+              v-model="descricao"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Valor:</label>
+          <div>
+            <input type="number" class="form-input" v-model="valor" required />
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Parcelado:</label>
+          <div>
+            <select name="" class="form-select" v-model="parcelado"></select>
+          </div>
+        </div>
       </div>
       <div v-if="parcelado">
         <label>Parcelas:</label>

@@ -5,7 +5,7 @@
     <form @submit.prevent="adicionarMes">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label class="form-label">Mês:</label>
             <select class="form-select" v-model="mesSelecionado">
               <option value="" selected></option>
@@ -15,7 +15,7 @@
             </select>
           </div>
 
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label class="form-label">Valor Inicial (Salário):</label>
             <div>
               <input
@@ -26,8 +26,23 @@
               />
             </div>
           </div>
-          <div class="col-md-4">
-            <button type="submit" class="btn btn-primary">Adicionar Mês</button>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Ano de referência:</label>
+            <div>
+              <input
+                class="form-input"
+                type="number"
+                v-model="anoReferencia"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-primary">
+                Adicionar Mês
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -35,7 +50,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 input {
   display: block;
   width: 100%;
@@ -78,6 +93,7 @@ export default {
         { id: 12, nome: 'Dezembro' },
       ],
       valorInicial: '',
+      anoReferencia: '',
     };
   },
   methods: {
@@ -85,6 +101,7 @@ export default {
       const novoMes = {
         mes: this.mesSelecionado,
         valor_inicial: this.valorInicial,
+        ano_referencia: this.anoReferencia,
       };
 
       console.log(novoMes);
@@ -96,6 +113,7 @@ export default {
           // Limpar os campos após a adição bem-sucedida (opcional)
           this.mesSelecionado = null;
           this.valorInicial = '';
+          this.anoReferencia = '';
         })
         .catch((error) => {
           console.error(error);

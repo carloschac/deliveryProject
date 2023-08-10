@@ -88,11 +88,11 @@ app.listen(port, () => {
 
 // Rota para adicionar um novo mês (Create/POST)
 app.post('/meses', (req, res) => {
-  const { mes, valor_inicial } = req.body;
+  const { mes, valor_inicial, ano_referencia} = req.body;
 
-  const sql = 'INSERT INTO mes (mes, valor_inicial) VALUES (?, ?)';
+  const sql = 'INSERT INTO mes (mes, valor_inicial, ano_referencia) VALUES (?, ?, ?)';
 
-  connection.query(sql, [mes, valor_inicial], (err, result) => {
+  connection.query(sql, [mes, valor_inicial, ano_referencia], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Erro ao adicionar o mês.' });
