@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 });
 
 // Rota para obter todos os gastos (Read/GET)
-app.get('/gastos', (req, res) => {
+app.get('/gastos/:id', (req, res) => {
   const sql = 'SELECT * FROM gastos';
 
   connection.query(sql, (err, results) => {
@@ -32,11 +32,11 @@ app.get('/gastos', (req, res) => {
 
 // Rota para adicionar um novo gasto (Create/POST)
 app.post('/gastos', (req, res) => {
-  const { descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id } = req.body;
+  const { descricao, valor, parcelado, parcelas, data_lancamento, mes_id } = req.body;
 
-  const sql = 'INSERT INTO gastos (descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO gastos (descricao, valor, parcelado, parcelas, data_lancamento, mes_id) VALUES (?, ?, ?, ?, ?, ?)';
 
-  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento, valor_inicial, mes_id], (err, result) => {
+  connection.query(sql, [descricao, valor, parcelado, parcelas, data_lancamento, mes_id], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Erro ao adicionar o gasto.' });
@@ -99,6 +99,7 @@ app.post('/meses', (req, res) => {
     }
 
     res.json({ id: result.insertId, mensagem: 'Mês adicionado com sucesso!' });
+    console.log({ id: result.insertId, mensagem: 'Mês adicionado com sucesso!' });
   });
 });
 
@@ -114,9 +115,8 @@ app.get('/meses', (req, res) => {
       return res.status(500).json({ error: 'Erro ao obter a lista de meses.' });
     }
 
-
     res.json(results);
-    console.log(results);
+    console.log("Meses listados \n")
   });
 });
 
@@ -136,6 +136,7 @@ app.delete('/meses/:id', (req, res) => {
     }
 
     res.json({ mensagem: 'Mês excluído com sucesso!' });
+    console.log("Mês excluído \n")
   });
 });
 
