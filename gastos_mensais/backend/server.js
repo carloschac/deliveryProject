@@ -90,7 +90,7 @@ app.listen(port, () => {
 app.post('/meses', (req, res) => {
   const { mes, valor_inicial, ano_referencia} = req.body;
 
-  const sql = 'INSERT INTO mes (mes, valor_inicial, ano_referencia) VALUES (?, ?, ?)';
+  const sql = 'INSERT INTO meses (mes, valor_inicial, ano_referencia) VALUES (?, ?, ?)';
 
   connection.query(sql, [mes, valor_inicial, ano_referencia], (err, result) => {
     if (err) {
@@ -106,7 +106,7 @@ app.post('/meses', (req, res) => {
 // Rota para obter a lista de meses (Read/GET)
 app.get('/meses', (req, res) => {
 
-  const sql = 'SELECT * FROM mes';
+  const sql = 'SELECT * FROM meses';
 
 
   connection.query(sql, (err, results) => {
@@ -127,7 +127,7 @@ app.delete('/meses/:id', (req, res) => {
 
   console.log(id);
 
-  const sql = 'DELETE FROM mes WHERE id = ?';
+  const sql = 'DELETE FROM meses WHERE ID = ?';
 
   connection.query(sql, [id], (err) => {
     if (err) {

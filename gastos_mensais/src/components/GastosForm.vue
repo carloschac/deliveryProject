@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="text-center">Cadastro de Gastos Mensais</h1>
 
-    <form>
+    <form @submit.prevent>
       <div class="row">
         <div class="col-md-4 mb-3">
           <label class="form-label">Descrição:</label>
@@ -49,7 +49,7 @@
           <label>Mês:</label>
           <select class="form-select" v-model="mes_id" required>
             <option value="" disabled>Selecione um mês</option>
-            <option v-for="mes in meses" :key="mes.id" :value="mes.id">
+            <option v-for="mes in meses" :key="mes.id" :value="mes.ID">
               {{ mes.mes }}
             </option>
           </select>

@@ -31,7 +31,7 @@
             <div>
               <input
                 class="form-input"
-                type="number"
+                type="text"
                 v-model="anoReferencia"
                 required
               />
